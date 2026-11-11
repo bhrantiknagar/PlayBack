@@ -24,7 +24,6 @@ export function NowPlayingModal() {
   if (!isNowPlayingOpen || !currentTrack) return null;
 
   const isLiked = favorites.includes(currentTrack.id);
-  const activeColor = currentTrack.ambientColor || '#6366f1';
   const artworkSrc = currentTrack.artwork || currentTrack.coverUrl || DEFAULT_ARTWORK;
   const title = currentTrack.title || 'Untitled Track';
   const artist = currentTrack.artist || 'Unknown Artist';
@@ -38,9 +37,6 @@ export function NowPlayingModal() {
   return (
     <div
       className="now-playing-overlay"
-      style={{
-        '--active-ambient-color': activeColor
-      }}
       role="dialog"
       aria-modal="true"
       aria-label="Now playing listening space"
@@ -71,7 +67,7 @@ export function NowPlayingModal() {
         <div className="now-playing-main-grid">
           {/* Left Column: 3D Artwork with Live Spinning Vinyl */}
           <div className="now-playing-artwork-col">
-            <div className="now-playing-cover-wrapper" style={{ boxShadow: `0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px ${activeColor}33` }}>
+            <div className="now-playing-cover-wrapper" style={{ boxShadow: '0 24px 60px rgba(0, 0, 0, 0.85)' }}>
               {/* Realistic Spinning Vinyl Disc */}
               <div
                 className={`now-playing-vinyl-disc animate-spin-slow ${!isPlaying ? 'animate-spin-paused' : ''}`}
@@ -183,7 +179,7 @@ export function NowPlayingModal() {
 
         {/* Lyrics Section */}
         <div className="now-playing-lyrics-container">
-          <h2 className="now-playing-lyrics-title" style={{ color: activeColor }}>
+          <h2 className="now-playing-lyrics-title">
             Lyrics
           </h2>
 

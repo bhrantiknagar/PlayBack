@@ -29,17 +29,14 @@ export function AudioPlayer() {
   const title = currentTrack.title || 'Untitled Track';
   const artist = currentTrack.artist || 'Unknown Artist';
   const quality = currentTrack.quality || 'Standard';
-  const activeColor = currentTrack.ambientColor || '#6366f1';
 
   return (
     <aside
       className={`player-dock-floating ${isPlaying ? 'is-playing' : ''}`}
       aria-label="Now playing bar"
       style={{
-        boxShadow: isPlaying
-          ? `0 16px 45px rgba(0, 0, 0, 0.85), 0 0 35px ${activeColor}35`
-          : '0 16px 45px rgba(0, 0, 0, 0.75), 0 0 20px rgba(99, 102, 241, 0.08)',
-        borderColor: isPlaying ? `${activeColor}44` : 'rgba(255, 255, 255, 0.1)'
+        boxShadow: '0 16px 45px rgba(0, 0, 0, 0.85)',
+        borderColor: 'rgba(255, 255, 255, 0.1)'
       }}
     >
       {/* Top Edge Progress Bar for Mobile */}
@@ -54,20 +51,6 @@ export function AudioPlayer() {
           style={{ cursor: 'pointer', position: 'relative' }}
           title="Open Listening Space"
         >
-          {/* Dynamic Ambient Backlight under Artwork */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: '-4px',
-              borderRadius: 'var(--radius-sm)',
-              background: activeColor,
-              filter: 'blur(10px)',
-              opacity: isPlaying ? 0.75 : 0.2,
-              transition: 'all 0.6s ease',
-              zIndex: 0
-            }}
-          />
-
           <div style={{
             position: 'relative',
             width: '46px',
@@ -189,7 +172,7 @@ export function AudioPlayer() {
           }}
           title="PlayBack Soft Wave (Click to expand)"
         >
-          <Visualizer width={100} height={24} color={activeColor} />
+          <Visualizer width={100} height={24} color="#6366f1" />
         </div>
 
         <div className="desktop-only-widget">

@@ -3,9 +3,9 @@
 .now-playing-overlay {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 35%, var(--active-ambient-color, rgba(99, 102, 241, 0.15)) 0%, rgba(14, 18, 26, 0.98) 65%, #06070a 100%);
-  backdrop-filter: blur(36px);
-  -webkit-backdrop-filter: blur(36px);
+  background: linear-gradient(180deg, #0e121a 0%, #08090d 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   z-index: 1000;
   overflow-y: auto;
   color: #ffffff;
