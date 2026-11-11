@@ -5,6 +5,7 @@ import { formatTime } from '../../utils/formatTime';
 import { IconButton } from '../ui/IconButton';
 import { TrackContextMenuButton } from './TrackContextMenuButton';
 import { optimizeImageUrl } from '../../utils/audioUtils';
+import { tracks as fallbackTracks } from '../../data/tracks';
 
 const DEFAULT_ARTWORK = '/images/albums/album-01.jpg';
 
@@ -34,6 +35,9 @@ function TrackListComponent({ tracks = [], showHeader = true, onRemoveTrack = nu
           const title = track.title || 'Untitled Track';
           const artist = track.artist || 'Unknown Artist';
           const album = track.album || 'Single';
+          const trackDuration = track.duration > 0
+            ? track.duration
+            : (fallbackTracks.find(ft => ft.id === track.id || ft.title?.toLowerCase() === track.title?.toLowerCase())?.duration || 0);
 
           return (
             <div
@@ -115,7 +119,7 @@ function TrackListComponent({ tracks = [], showHeader = true, onRemoveTrack = nu
 
               {/* Duration */}
               <span style={{ fontSize: '12px', color: 'var(--text-muted)', textAlign: 'right', fontFamily: 'var(--font-mono)' }}>
-                {track.duration > 0 ? formatTime(track.duration) : '--:--'}
+                {trackDuration > 0 ? formatTime(trackDuration) : '--:--'}
               </span>
 
               {/* Actions */}

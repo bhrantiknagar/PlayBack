@@ -36,8 +36,13 @@ export function PlayerProvider({ children }) {
     fetchTracks()
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
-          setGlobalTracks(data);
-          setPlaylist(data);
+          const merged = data.map(t => {
+            if (t.duration && t.duration > 0) return t;
+            const fallback = fallbackTracks.find(ft => ft.id === t.id || ft.title?.toLowerCase() === t.title?.toLowerCase());
+            return fallback?.duration ? { ...t, duration: fallback.duration } : t;
+          });
+          setGlobalTracks(merged);
+          setPlaylist(merged);
         } else {
           setGlobalTracks(fallbackTracks);
           setPlaylist(fallbackTracks);
@@ -584,11 +589,17 @@ export function PlayerProvider({ children }) {
     const handleLoadedMetadata = () => {
       if (audio.duration && !isNaN(audio.duration)) {
         setDuration(audio.duration);
+        const d = Math.round(audio.duration);
+        setGlobalTracks(prev => prev.map(t => (t.id === currentTrack?.id && (!t.duration || t.duration <= 0)) ? { ...t, duration: d } : t));
+        setPlaylist(prev => prev.map(t => (t.id === currentTrack?.id && (!t.duration || t.duration <= 0)) ? { ...t, duration: d } : t));
       }
     };
     const handleDurationChange = () => {
       if (audio.duration && !isNaN(audio.duration)) {
         setDuration(audio.duration);
+        const d = Math.round(audio.duration);
+        setGlobalTracks(prev => prev.map(t => (t.id === currentTrack?.id && (!t.duration || t.duration <= 0)) ? { ...t, duration: d } : t));
+        setPlaylist(prev => prev.map(t => (t.id === currentTrack?.id && (!t.duration || t.duration <= 0)) ? { ...t, duration: d } : t));
       }
     };
     const handleEnded = () => {

@@ -3,6 +3,7 @@ import { X, Trash2, ListMusic, Play } from 'lucide-react';
 import { usePlayer } from '../../context/PlayerContext';
 import { formatTime } from '../../utils/formatTime';
 import { IconButton } from '../ui/IconButton';
+import { tracks as fallbackTracks } from '../../data/tracks';
 
 const DEFAULT_ARTWORK = '/images/albums/album-01.jpg';
 
@@ -225,7 +226,9 @@ export function QueueDrawer() {
                   </div>
                 </div>
                 <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                  {track.duration > 0 ? formatTime(track.duration) : '--:--'}
+                  {(track.duration > 0 ? track.duration : (fallbackTracks.find(ft => ft.id === track.id || ft.title?.toLowerCase() === track.title?.toLowerCase())?.duration || 0)) > 0
+                    ? formatTime(track.duration > 0 ? track.duration : fallbackTracks.find(ft => ft.id === track.id || ft.title?.toLowerCase() === track.title?.toLowerCase()).duration)
+                    : '--:--'}
                 </span>
               </div>
             ))}
